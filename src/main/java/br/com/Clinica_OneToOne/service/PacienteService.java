@@ -5,10 +5,12 @@ import br.com.Clinica_OneToOne.exception.ResourceNotFoundException;
 import br.com.Clinica_OneToOne.models.Paciente;
 import br.com.Clinica_OneToOne.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class PacienteService {
     @Autowired
     private final PacienteRepository pacienteRepository;

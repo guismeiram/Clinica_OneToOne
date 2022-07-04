@@ -2,9 +2,10 @@ package br.com.Clinica_OneToOne.dto;
 
 import br.com.Clinica_OneToOne.models.Paciente;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ConsultaDTO {
+public class ConsultaDTO implements Serializable {
     private Long id;
     private LocalDateTime data_hora;
     private String numero;

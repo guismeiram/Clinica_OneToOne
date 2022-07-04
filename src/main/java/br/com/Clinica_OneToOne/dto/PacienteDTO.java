@@ -1,6 +1,8 @@
 package br.com.Clinica_OneToOne.dto;
 
-public class PacienteDTO {
+import java.io.Serializable;
+
+public class PacienteDTO implements Serializable {
     private Long id;
     private String nome;
 }

@@ -23,11 +23,16 @@ import javax.transaction.Transactional;
 @RestController
 @RequestMapping("/api/consulta")
 public class ConsultaController {
-
+    @Autowired
     private ConsultaService consultaService;
 
     @Autowired
     private ModelMapper mapper;
+
+    public ConsultaController(ConsultaService consultaService, ModelMapper mapper) {
+        this.consultaService = consultaService;
+        this.mapper = mapper;
+    }
 
     @PostMapping
     @Transactional
@@ -49,7 +54,7 @@ public class ConsultaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ConsultaDTO> getPostById(@PathVariable(name = "id") Long id) throws ClinicaNotFoundException {
+    public ResponseEntity<ConsultaDTO> getConsultaById(@PathVariable(name = "id") Long id) throws ClinicaNotFoundException {
         Consulta consulta = consultaService.getConsultaById(id);
 
         // convert entity to DTO
@@ -60,12 +65,12 @@ public class ConsultaController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePost(@PathVariable(name = "id") Long id) throws ClinicaNotFoundException {
+    public void deleteConsulta(@PathVariable(name = "id") Long id) throws ClinicaNotFoundException {
         consultaService.deleteConsulta(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConsultaDTO> updateImovel(@RequestBody ConsultaDTO consultaDTO, @PathVariable long id) throws ClinicaNotFoundException {
+    public ResponseEntity<ConsultaDTO> updateConsulta(@RequestBody ConsultaDTO consultaDTO, @PathVariable long id) throws ClinicaNotFoundException {
         Consulta consultaRequest = mapper.map(consultaDTO, Consulta.class);
 
         Consulta consulta = consultaService.updateById(consultaRequest, id);

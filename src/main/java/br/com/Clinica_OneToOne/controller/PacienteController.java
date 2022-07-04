@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@RestController
+@RequestMapping("/api/paciente")
 public class PacienteController {
 
     @Autowired
-    private final PacienteService pacienteService;
+    private PacienteService pacienteService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -25,11 +26,13 @@ public class PacienteController {
         this.pacienteService = pacienteService;
         this.modelMapper = modelMapper;
     }
-
+    
     @PostMapping
     public ResponseEntity<PacienteDTO> createPaciente(@RequestBody PacienteDTO pacienteDTO) {
+        Paciente pacienteInsere = new Paciente();
         // convert DTO to entity
         Paciente pacienteRequest = modelMapper.map(pacienteDTO, Paciente.class);
+        pacienteRequest.setNome(pacienteInsere.getNome());
 
         Paciente paciente = pacienteService.createPaciente(pacienteRequest);
 
@@ -38,20 +41,15 @@ public class PacienteController {
 
         return new ResponseEntity<PacienteDTO>(pacienteResponse, HttpStatus.CREATED);
     }
-    ///////
-
-
-
 
     @GetMapping
     public List<PacienteDTO> getAllPaciente() {
-
         return pacienteService.findAll().stream().map(post -> modelMapper.map(post, PacienteDTO.class))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PacienteDTO> getMedicoById(@PathVariable(name = "id") Long id) throws ClinicaNotFoundException {
+    public ResponseEntity<PacienteDTO> getPacienteById(@PathVariable(name = "id") Long id) throws ClinicaNotFoundException {
         Paciente paciente = pacienteService.getMedicoById(id);
 
         // convert entity to DTO
@@ -68,7 +66,7 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteDTO> updateImovel(@RequestBody PacienteDTO pacienteDTO, @PathVariable long id) throws ClinicaNotFoundException {
+    public ResponseEntity<PacienteDTO> updatePaciente(@RequestBody PacienteDTO pacienteDTO, @PathVariable long id) throws ClinicaNotFoundException {
         Paciente pacienteRequest = modelMapper.map(pacienteDTO, Paciente.class);
 
         Paciente paciente = pacienteService.updateById(id, pacienteRequest);

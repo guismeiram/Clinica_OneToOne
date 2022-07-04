@@ -5,14 +5,15 @@ import br.com.Clinica_OneToOne.exception.ResourceNotFoundException;
 import br.com.Clinica_OneToOne.models.Consulta;
 import br.com.Clinica_OneToOne.repository.ConsultaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class ConsultaService {
+    @Autowired
     private final ConsultaRepository consultaRepository;
 
-
-    @Autowired
     public ConsultaService(ConsultaRepository consultaRepository) {
         this.consultaRepository = consultaRepository;
     }
