@@ -41,11 +41,7 @@ public class ConsultaController {
         Consulta consultaRequest = mapper.map(consultaDTO, Consulta.class);
         //consultaRequest.getConsultorio().forEach(c ->c.setNumero(c.getNumero()));
         //Paciente
-       consultaRequest.getPaciente().getNome();
-       //consulta
-        consultaRequest.getNumero();
-        consultaRequest.getEspecialidade();
-        consultaRequest.getData_hora();
+      
 
         //Grava na Memoria
         Consulta consulta = consultaService.createConsulta(consultaRequest);

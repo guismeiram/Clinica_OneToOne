@@ -50,7 +50,7 @@ public class PacienteService {
                 .orElseThrow(() -> new ResourceNotFoundException());
 
         paciente.setNome(pacienteRequest.getNome());
-        return paciente;
+        return pacienteRepository.save(paciente);
     }
 
 }

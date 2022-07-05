@@ -29,10 +29,8 @@ public class PacienteController {
     
     @PostMapping
     public ResponseEntity<PacienteDTO> createPaciente(@RequestBody PacienteDTO pacienteDTO) {
-        Paciente pacienteInsere = new Paciente();
         // convert DTO to entity
         Paciente pacienteRequest = modelMapper.map(pacienteDTO, Paciente.class);
-        pacienteRequest.setNome(pacienteInsere.getNome());
 
         Paciente paciente = pacienteService.createPaciente(pacienteRequest);
 

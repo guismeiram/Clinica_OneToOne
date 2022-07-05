@@ -3,7 +3,10 @@ package br.com.Clinica_OneToOne.service;
 import br.com.Clinica_OneToOne.exception.ClinicaNotFoundException;
 import br.com.Clinica_OneToOne.exception.ResourceNotFoundException;
 import br.com.Clinica_OneToOne.models.Consulta;
+import br.com.Clinica_OneToOne.models.Paciente;
 import br.com.Clinica_OneToOne.repository.ConsultaRepository;
+import br.com.Clinica_OneToOne.repository.PacienteRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,13 @@ import java.util.Optional;
 public class ConsultaService {
     @Autowired
     private final ConsultaRepository consultaRepository;
+    @Autowired
+    private final PacienteRepository pacienteRepository;
 
-    public ConsultaService(ConsultaRepository consultaRepository) {
+
+    public ConsultaService(ConsultaRepository consultaRepository, PacienteRepository pacienteRepository) {
         this.consultaRepository = consultaRepository;
+		this.pacienteRepository = pacienteRepository;
     }
 
     public Consulta createConsulta(Consulta consulta) {
@@ -40,20 +47,19 @@ public class ConsultaService {
     }
 
     public Consulta updateById(Consulta consultaRequest,Long id) throws ClinicaNotFoundException{
-        consultaRequest = consultaRepository.findById(id)
+        Consulta consulta = consultaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException());
-
+        Paciente paciente = pacienteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException());
         //consulta
-        consultaRequest.getData_hora();
-        consultaRequest.getEspecialidade();
-        consultaRequest.getNumero();
-
+        consulta.setData_hora(consultaRequest.getData_hora());
+        consulta.setEspecialidade(consultaRequest.getEspecialidade());
+        consulta.setNumero(consultaRequest.getNumero());
         //paciente
-        consultaRequest.getPaciente().getNome();
-
-
-
-        return consultaRequest;
+        paciente.setNome(consultaRequest.getPaciente().getNome());
+        //consulta e paciente
+        consulta.setPaciente(paciente);
+        return consultaRepository.save(consulta);
 
     }
 }
