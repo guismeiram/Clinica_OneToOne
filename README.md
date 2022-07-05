@@ -6,7 +6,7 @@ Foi utilizado:
 
 -SWAGGER
 
--JPA(BIDIRECIONAL ONETOMANY E MANYTOONE)
+-JPA(OneToOne)
 
 -LOMBOK
 
